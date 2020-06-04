@@ -1,15 +1,8 @@
 package com.vinay.dependencywithkoinapp.model
 
-data class LoadingState private constructor(val status: Status, val msg: String? = null) {
-    companion object {
-        val LOADED = LoadingState(Status.SUCCESS)
-        val LOADING = LoadingState(Status.RUNNING)
-        fun error(msg: String?) = LoadingState(Status.FAILED, msg)
-    }
+sealed class UiState
 
-    enum class Status {
-        RUNNING,
-        SUCCESS,
-        FAILED
-    }
-}
+object Loading : UiState()
+object Success : UiState()
+class Error(val error: Throwable) : UiState()
+class ErrorString(val string : String) : UiState()
